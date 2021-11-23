@@ -30,7 +30,13 @@ public class User {
         int hashU2 = user2.hashCode() ^ user2.hashCode() >>> 16;
         int index1 = hashU1 & 15;
         int index2 = hashU2 & 15;
-        System.out.println(index1);
-        System.out.println(index2);
+        System.out.println("hashCode1: "
+                + user1.hashCode()
+                + " hash1: " + hashU1
+                + " index1: " + index1);
+        System.out.println("hashCode2: "
+                + user2.hashCode()
+                + " hash2: " + hashU2
+                + " index2: " + index2);
     }
 }
