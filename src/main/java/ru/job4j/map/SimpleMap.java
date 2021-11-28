@@ -13,16 +13,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        int index = indexFor(hash(key.hashCode()));
+        if (count >= capacity * LOAD_FACTOR) {
+            expand();
+        }
         boolean result = false;
+        int index = indexFor(hash(key.hashCode()));
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
             count++;
             modCount++;
             result = true;
-            if (count >= capacity * LOAD_FACTOR) {
-                expand();
-            }
         }
         return result;
     }
@@ -36,26 +36,29 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        int newCapacity = capacity * 2;
-        MapEntry<K, V>[] newTable = new MapEntry[newCapacity];
+        capacity *= 2;
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> entry : table) {
             newTable[indexFor(hash(entry.key.hashCode()))] = entry;
         }
-        capacity = newCapacity;
         table = newTable;
     }
 
     @Override
     public V get(K key) {
+        V result = null;
         int index = indexFor(hash(key.hashCode()));
-        return table[index] == null ? null : table[index].value;
+        if (table[index] != null && table[index].key.equals(key)) {
+            result = table[index].value;
+        }
+        return result;
     }
 
     @Override
     public boolean remove(K key) {
         boolean result = false;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null) {
+        if (table[index] != null && table[index].key.equals(key)) {
             table[index] = null;
             count--;
             modCount++;
