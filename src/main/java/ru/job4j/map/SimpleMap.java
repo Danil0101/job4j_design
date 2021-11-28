@@ -16,13 +16,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        boolean result = false;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] == null) {
+        boolean result = table[index] == null;
+        if (result) {
             table[index] = new MapEntry<>(key, value);
             count++;
             modCount++;
-            result = true;
         }
         return result;
     }
@@ -79,12 +78,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                     throw new ConcurrentModificationException();
                 }
                 boolean result = false;
-                if (point < capacity) {
-                    for (; point < capacity; point++) {
-                        if (table[point] != null) {
-                            result = true;
-                            break;
-                        }
+                for (; point < capacity; point++) {
+                    if (table[point] != null) {
+                        result = true;
+                        break;
                     }
                 }
                 return result;
