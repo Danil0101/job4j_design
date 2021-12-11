@@ -31,8 +31,13 @@ public class LogFilter {
         }
     }
 
+    public static void print(List<String> log) {
+        log.forEach(System.out::println);
+    }
+
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
+        print(log);
         save(log, "404.txt");
     }
 }
