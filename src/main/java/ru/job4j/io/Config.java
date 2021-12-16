@@ -22,10 +22,15 @@ public class Config {
                 String str = read.readLine();
                 if (!str.isEmpty() && !str.startsWith("#")) {
                     String[] pair = str.split("=");
+                    if (pair.length != 2
+                            || pair[0].isEmpty()
+                            || pair[1].isEmpty()) {
+                        throw new IllegalArgumentException();
+                    }
                     values.put(pair[0], pair[1]);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
