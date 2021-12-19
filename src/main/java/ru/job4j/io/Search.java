@@ -14,6 +14,9 @@ public class Search {
                     "Usage java -jar dir.jar ROOT_FOLDER FILE_EXTENSION");
         }
         Path start = Paths.get(args[0]);
+        if (!start.toFile().exists() || !start.toFile().isDirectory()) {
+            throw new IllegalArgumentException();
+        }
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
