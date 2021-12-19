@@ -15,7 +15,7 @@ public class Search {
         }
         Path start = Paths.get(args[0]);
         if (!start.toFile().exists() || !start.toFile().isDirectory()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Directory not found");
         }
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
