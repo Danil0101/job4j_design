@@ -7,6 +7,9 @@ public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalArgumentException("Keys not found");
+        }
         return values.get(key);
     }
 
@@ -15,14 +18,8 @@ public class ArgsName {
             throw new IllegalArgumentException();
         }
         for (String str : args) {
+            templateValidation(str);
             String[] pair = str.split("=");
-            if (pair.length != 2
-                    || pair[0].isEmpty()
-                    || pair[0].length() < 2
-                    || !pair[0].startsWith("-")
-                    || pair[1].isEmpty()) {
-                throw new IllegalArgumentException();
-            }
             values.put(pair[0].substring(1), pair[1]);
         }
     }
@@ -31,6 +28,12 @@ public class ArgsName {
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
+    }
+
+    private void templateValidation(String str) {
+        if (!str.matches("^-+.*.=+.*.$")) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public static void main(String[] args) {
