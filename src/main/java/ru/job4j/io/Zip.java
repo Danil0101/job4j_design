@@ -10,11 +10,11 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public static void packFiles(List<File> sources, File target) {
+    public static void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            for (File file : sources) {
-                zip.putNextEntry(new ZipEntry(file.getPath()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+            for (Path path : sources) {
+                zip.putNextEntry(new ZipEntry(path.toFile().getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toFile()))) {
                     zip.write(out.readAllBytes());
                 }
             }
@@ -45,8 +45,7 @@ public class Zip {
         if (!path.toFile().exists() || !path.toFile().isDirectory()) {
             throw new IllegalArgumentException("Directory not found");
         }
-        List<Path> paths = Search.search(path, p -> !p.endsWith(argsName.get("e")));
-        List<File> sources = paths.stream().map(Path::toFile).collect(Collectors.toList());
+        List<Path> sources = Search.search(path, p -> !p.endsWith(argsName.get("e")));
         packFiles(sources, Paths.get(argsName.get("o")).toFile());
 
         packSingleFile(
