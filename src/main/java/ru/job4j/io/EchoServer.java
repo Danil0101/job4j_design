@@ -16,8 +16,14 @@ public class EchoServer {
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
                         String[] arStr = str.split(" ");
-                        if ("GET".equals(arStr[0]) && "/?msg=Bye".equals(arStr[1])) {
-                            server.close();
+                        if ("GET".equals(arStr[0])) {
+                            if ("/?msg=Hello".equals(arStr[1])) {
+                                out.write("Hello".getBytes());
+                            } else if ("/?msg=Exit".equals(arStr[1])) {
+                                server.close();
+                            } else {
+                                out.write("What".getBytes());
+                            }
                         }
                     }
                     out.flush();
