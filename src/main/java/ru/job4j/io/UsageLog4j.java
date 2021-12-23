@@ -12,5 +12,14 @@ public class UsageLog4j {
         LOG.info("info message");
         LOG.warn("warn message");
         LOG.error("error message");
+        byte v1 = 1;
+        short v2 = 2;
+        int v3 = 3;
+        long v4 = 4L;
+        float v5 = 5F;
+        double v6 = 6D;
+        char v7 = '7';
+        boolean v8 = true;
+        LOG.debug("{} {} {} {} {} {} {} {}", v1, v2, v3, v4, v5, v6, v7, v8);
     }
 }
