@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<house built="true" floors="9" series="A100">
+    <roof color="gray"/>
+    <properties>
+        <property>p1</property>
+        <property>p2</property>
+    </properties>
+</house>
