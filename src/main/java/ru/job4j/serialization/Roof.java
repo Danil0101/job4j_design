@@ -1,7 +1,15 @@
 package ru.job4j.serialization;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name = "contact")
 public class Roof {
-    private final String color;
+
+    @XmlAttribute
+    private String color;
+
+    public Roof() {
+    }
 
     public Roof(String color) {
         this.color = color;
