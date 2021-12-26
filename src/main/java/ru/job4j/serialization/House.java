@@ -2,6 +2,7 @@ package ru.job4j.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONObject;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -41,6 +42,26 @@ public class House {
         this.properties = properties;
     }
 
+    public boolean isBuilt() {
+        return built;
+    }
+
+    public int getFloors() {
+        return floors;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public Roof getRoof() {
+        return roof;
+    }
+
+    public String[] getProperties() {
+        return properties;
+    }
+
     @Override
     public String toString() {
         return "House{"
@@ -76,5 +97,13 @@ public class House {
             House result = (House) unmarshaller.unmarshal(reader);
             System.out.println(result);
         }
+        System.out.println("----------");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("built", house.isBuilt());
+        jsonObject.put("floors", house.getFloors());
+        jsonObject.put("series", house.getSeries());
+        jsonObject.put("roof", house.getRoof());
+        jsonObject.put("properties", house.getProperties());
+        System.out.println(jsonObject);
     }
 }
