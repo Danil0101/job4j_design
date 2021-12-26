@@ -5,7 +5,7 @@ import org.json.JSONPropertyIgnore;
 public class A {
     private B b;
 
-//    @JSONPropertyIgnore
+    @JSONPropertyIgnore
     public B getB() {
         return b;
     }
