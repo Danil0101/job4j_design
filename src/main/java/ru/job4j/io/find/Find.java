@@ -33,16 +33,12 @@ public class Find {
         }
         Predicate<Path> condition = null;
         if ("mask".equals(argsName.get("t"))) {
-            condition = p -> {
-                if (argsName.get("n").startsWith("*")) {
-                    return p.toFile().getName().endsWith(argsName.get("n")
-                            .substring(1));
-                } else if (argsName.get("n").endsWith("*")) {
-                    return p.toFile().getName().startsWith(argsName.get("n")
-                            .substring(0, argsName.get("n").length() - 1));
-                }
-                return false;
-            };
+            String regex = "^"
+                    + argsName.get("n")
+                    .replaceAll("\\*", ".+")
+                    .replace('?', '.')
+                    + "$";
+            condition = p -> p.toFile().getName().matches(regex);
         } else if ("name".equals(argsName.get("t"))) {
             condition = p -> p.toFile().getName().equals(argsName.get("n"));
         } else if ("regex".equals(argsName.get("t"))) {
