@@ -18,7 +18,7 @@ public class ImportDB {
         this.dump = dump;
     }
 
-    public List<User> load() throws IOException {
+    public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(e -> {
@@ -28,6 +28,8 @@ public class ImportDB {
                 }
                 users.add(new User(line[0].trim(), line[1].trim()));
             });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return users;
     }
